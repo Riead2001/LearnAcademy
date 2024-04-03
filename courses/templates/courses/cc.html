@@ -1,0 +1,98 @@
+<!-- create_course.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Course</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        form {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        textarea,
+        input[type="file"] {
+            width: calc(100% - 22px);
+            margin-bottom: 10px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            resize: none;
+        }
+
+        input[type="submit"] {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required><br>
+      
+        <label for="slug">Slug:</label>
+        <input type="text" id="slug" name="slug" required><br>
+      
+        <label for="description">Description:</label>
+        <textarea id="description" name="description"></textarea><br>
+      
+        <label for="price">Price:</label>
+        <input type="number" id="price" name="price" required><br>
+      
+        <label for="discount">Discount:</label>
+        <input type="number" id="discount" name="discount"><br>
+      
+        <label for="length">Length (in minutes):</label>
+        <input type="number" id="length" name="length" required><br>
+      
+        <label for="image">Thumbnail Image:</label>
+        <input type="file" id="image" name="image" accept="image/*" required><br>
+      
+        <label for="resource">Resource File:</label>
+        <input type="file" id="resource" name="resource" required><br>
+      
+        <!-- Tags -->
+        <label for="tags">Tags (separated by commas):</label>
+        <input type="text" id="tags" name="tags"><br>
+      
+        <!-- Learnings -->
+        <label for="learnings">Learnings (one per line):</label>
+        <textarea id="learnings" name="learnings"></textarea><br>
+      
+        <!-- Videos -->
+        <label for="videos">Videos (format: number, title, video_id, is_preview):</label>
+        <textarea id="videos" name="videos"></textarea><br>
+      
+        <input type="submit" value="Create Course">
+    </form>
+</body>
+</html>

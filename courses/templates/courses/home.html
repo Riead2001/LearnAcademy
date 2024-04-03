@@ -1,0 +1,82 @@
+{% extends './base.html' %}
+{% load static %}
+{% load course_custom_tag %}
+
+{% block title %} Home {% endblock title %}
+
+{% block content %}
+<div class="container-fluid">
+  <div class="row mt-3">
+    <!-- Search bar -->
+    <div class="col-md-6 mb-3">
+      <input type="text" id="searchInput" class="form-control" placeholder="Search for courses...">
+    </div>
+    
+    {% for course in courses %}
+    <div class="col-lg-3 col-md-4 col-sm-6 mb-5 course-card">
+      <!-- Course card content -->
+      <div class="card text-left">
+        <img class="card-img-top" src="{{ course.image.url }}" alt="">
+        <div class="card-body">
+          <h4 class="card-title">{{ course.name }}</h4>
+          <div class="card-text">
+            <p>Save {{ course.discount }}%
+              <br>
+              <span class="price">
+                <del>{{ course.price }} টাকা</del>
+                &nbsp;
+                {% apply_discount course.price course.discount as value %}
+                {{ value }} টাকা
+              </span>
+            </p>
+          </div>
+        </div>
+        <!-- Enrollment option -->
+        {% is_enrolled request.user course as enrolled %}
+        <div class="card-footer p-0 border-0">
+          <div class="row no-gutters">
+            {% if not enrolled %}
+            <div class="col border">
+              <a href="{% url 'demopay' course.slug %}" class="btn btn-light btn-block">Enroll Now</a>
+            </div>
+            {% endif %}
+            <div class="col border">
+              <a href="{% url 'coursepage' course.slug %}" class="btn btn-light btn-block">Show More</a>
+            </div>
+          </div>
+        </div>
+        <!-- Apply for scholarship button -->
+        
+        <div class="container">
+          <div class="course">
+            <h2></h2>
+            <p>Average Rating: {{ course.avg_rating }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+
+
+
+<script>
+  // JavaScript for filtering courses based on exact search input
+  const searchInput = document.getElementById('searchInput');
+  const courseCards = document.querySelectorAll('.course-card');
+
+  searchInput.addEventListener('input', function() {
+    const searchQuery = this.value.trim().toLowerCase();
+    courseCards.forEach(function(card) {
+      const courseName = card.querySelector('.card-title').textContent.trim().toLowerCase();
+      if (courseName === searchQuery) {
+        card.style.display = 'block';
+      } else {
+        card.style.display = 'none';
+      }
+    });
+  });
+</script>
+
+{% endblock content %}
