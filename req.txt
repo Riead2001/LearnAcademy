@@ -10,7 +10,7 @@ chardet
 Click
 
 colorama
-command-not-found
+
 configobj
 constantly
 coverage
